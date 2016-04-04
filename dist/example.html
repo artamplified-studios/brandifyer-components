@@ -4,10 +4,14 @@
 <title>Brandifyer Components examples and uses</title>
 
 <!-- css dependencies -->
-<link rel="stylesheet" type="text/css" href="css/brandifyer-components.css">
+<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/css/pikaday.css">
+<link rel="stylesheet" type="text/css" href="/css/brandifyer-components.css">
 
 <!-- javascript dependencies -->
 <script src="js/jquery.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/pikaday.js"></script>
 <script src="js/jquery.brandifyer-components.js"></script>
 </head>
 
@@ -15,7 +19,38 @@
 <body>
 Hello World!
 
+<input id="datepicker" type="text">
+<button class="datepicker-options-btn"><i class="fa fa-caret-right"></i></button>
 
+<div class="brandifyer">
+	<div class="datepicker-options" data-datepicker-format=""></div>
+</div>
+
+<script>
+
+$( document ).ready(function() {
+
+    $('.datepicker-options').brandifyer().datepickerOptions('templates/datepicker-options.html', dateFormatChange);
+
+    var picker = new Pikaday({ 
+    	field: $('#datepicker')[0],
+    	format: $('.datepicker-options').attr('data-datepicker-format')
+    });
+
+    console.log(picker)
+
+
+    function dateFormatChange() {
+    	picker.destroy();
+    	picker = new Pikaday({ 
+    		field: $('#datepicker')[0],
+    		format: $('.datepicker-options').attr('data-datepicker-format')
+   	 	});
+    	
+    }
+});
+
+</script>
 </body>
 
 </html>

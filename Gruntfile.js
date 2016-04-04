@@ -6,17 +6,21 @@ module.exports = function(grunt) {
 			main: {
 				files:[
 					{src: 'bower_components/jquery/dist/jquery.min.js', dest: 'dist/js/jquery.min.js'},
-					{src: 'bower_components/font-awesome/css/font-awesome.min.css', dest: 'dist/css/font-awesome.min.css'},
-					{src: 'css/brandifyer-components.css', dest: 'dist/css/brandifyer-components.css'},
-					{src: 'js/jquery.brandifyer-components.js', dest: 'dist/js/jquery.brandifyer-components.js'},
-					{src: 'index.html', dest: 'dist/example.html'}
+					{src: 'node_modules/moment/min/moment.min.js', dest: 'dist/js/moment.min.js'},
+					{src: 'bower_components/font-awesome/css/font-awesome.min.css', dest: 'dist/js/font-awesome.min.css'},
+					{src: '**', expand:true, cwd: 'css', dest: 'dist/css'},
+					{src: '**', expand:true, cwd: 'js', dest: 'dist/js'},
+					{src: '**', expand:true, cwd: 'templates', dest: 'dist/templates'},
+					{src: 'index.html', dest: 'dist/example.html'},
+
+					{src: '**', expand:true, cwd: 'bower_components/font-awesome/fonts', dest: 'dist/fonts/'}
 				]
 			}
 		},
 
 		watch: {
 			scripts: {
-				files: ['index.html', 'js/brandifyer-components.js', 'templates/*'],
+				files: ['index.html', 'js/jquery.brandifyer-components.js', 'templates/*', 'css/brandifyer-components.css'],
 				tasks: ['copy'],
 				options: {
 					debounceDelay: 250,
