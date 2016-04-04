@@ -22,30 +22,79 @@ Hello World!
 <input id="datepicker" type="text">
 <button class="datepicker-options-btn"><i class="fa fa-caret-right"></i></button>
 
-<div class="brandifyer">
+<!-- example 1 -->
+<!-- <div class="brandifyer">
 	<div class="datepicker-options" data-datepicker-format=""></div>
+	<div class="datepicker-format"></div>
+</div> -->
+
+
+<!-- example 2 -->
+<div class="brandifyer">
+	<div class="datepicker-options" data-datepicker-format="">
+
+		<div class="template">
+
+			<div class="date-type">
+				<ul>
+					<li class="node-header" data-translation="en">Type to format</li>
+					<li id="1" class="node" data-translation="en" data-format-type="day">Day <i class="fa fa-caret-right pull-right"></i></li>
+					<li id="2" class="node" data-translation="en" data-format-type="month">Month <i class="fa fa-caret-right pull-right"></i></li>
+					<li id="3" class="node" data-translation="en" data-format-type="year">Year <i class="fa fa-caret-right pull-right"></i></li>
+				</ul>
+			</div>
+
+			<div display="none" class="date-options">
+				<ul>
+					<li class="node-header" data-translation="en">Format as</li>
+					<li id="1" class="node" data-translation="en" data-format-type="number">Number</li>
+					<li id="2" class="node" data-translation="en" data-format-type="name">Name</li>
+					<li id="3" class="node" data-translation="en" data-format-type="none">None</li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="datepicker-format"></div>
 </div>
 
 <script>
 
 $( document ).ready(function() {
 
-    $('.datepicker-options').brandifyer().datepickerOptions('templates/datepicker-options.html', dateFormatChange);
-
+    //	pikaday
     var picker = new Pikaday({ 
     	field: $('#datepicker')[0],
-    	format: $('.datepicker-options').attr('data-datepicker-format')
+    	format: 'DD-MM-YYYY'
+    });
+    //	--
+
+    $('.datepicker-options').brandifyer().datepickerOptions({
+    	//template: 'templates/datepicker-options.html',	//	neede for example 1
+    	onFormatChanged: dateFormatChange
     });
 
-    console.log(picker)
 
+    //	callback function triggered from jquery.brandifyer-components.js
+    //	returns format:Object
+    //	@format.day
+    //	@format.month
+    //	@format.year
+    function dateFormatChange(newFormat) {
+    	var f = newFormat.day+'-'+newFormat.month+'-'+newFormat.year;
+    	var m = moment($('#datepicker').attr('value'), f).format();
 
-    function dateFormatChange() {
+    	$('#datepicker').attr('value', m)
+
+    	//	re-set pikaday
     	picker.destroy();
-    	picker = new Pikaday({ 
+    	picker = new Pikaday({
     		field: $('#datepicker')[0],
-    		format: $('.datepicker-options').attr('data-datepicker-format')
-   	 	});
+    		format: f
+    	});
+    	//	--
     	
     }
 });

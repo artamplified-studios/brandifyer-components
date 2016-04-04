@@ -14,34 +14,33 @@
 	$.fn.brandifyer = function() {
 		//console.log('init jquery plugin Brandifyer');
 
-		//	default settings
-		var options = {
-			element: 			'.brandifyer .datepicker-options',
-			elementButton: 		'.datepicker-options-btn',
-			position: 			$('.brandifyer .datepicker-options-btn'),
-			dateTypeNode: 		'.datepicker-options .date-type ul li.node',
-			dateOptions: 		'.brandifyer .datepicker-options .date-options',
-			dateOptionsNode: 	'.datepicker-options .date-options ul li.node',
-			display: 			false,
-			position: 			$('.datepicker-options-btn').position()	
-		};
-		//	--
 
-		var dateFormat = {
-			day: 		'DD',
-			month: 		'MMMM',
-			year: 		'YYYY'
-		};
-
-		var selected = {};
-
-
-		//	datepicker options
+		//	# brandifyer.datepickerOptions
 		//	used to format date
-		this.datepickerOptions = function(template, callback) {
+		this.datepickerOptions = function(settings) {
+			//	default settings
+			var options = {
+				element: 			'.brandifyer .datepicker-options',
+				elementButton: 		'.datepicker-options-btn',
+				position: 			$('.brandifyer .datepicker-options-btn'),
+				dateTypeNode: 		'.datepicker-options .date-type ul li.node',
+				dateOptions: 		'.brandifyer .datepicker-options .date-options',
+				dateOptionsNode: 	'.datepicker-options .date-options ul li.node',
+				display: 			false,
+				position: 			$('.datepicker-options-btn').position()	
+			};
+			//	--
+
+			var dateFormat = {
+				day: 		'DD',
+				month: 		'MM',
+				year: 		'YYYY'
+			};
+
+			var selected = {};
 			//console.log('position:', options.position);
 
-			options.callback = callback || null;
+			options.onFormatChanged = settings.onFormatChanged || null;
 
 			$(options.element).attr('display', 'none');
 
@@ -49,22 +48,25 @@
 			$(options.element).attr('data-datepicker-format', dateFormat.day+' '+dateFormat.month+' '+dateFormat.year);
 
 			$('.datepicker-options').css({
-				left: '231px'
+				left: options.position.left
 			});
+			
 			$(options.elementButton).on('click', toggleDisplay);
 
 			//	if template passed
 			//	load template in options.element
 			//	and bind event after async is complete
-			if(template !== 'undefined' || '') {
-				$(options.element).load(template, function() {
+			if( Boolean(settings.hasOwnProperty('template')) ) {
+				$(options.element).load(settings.template, function() {
 					$(options.dateTypeNode).on('click', selectNode);
 					$(options.dateOptionsNode).on('click', selectNode);
-					phoneHome();
+					//phoneHome();
 				});
 			//	else init event
 			} else {
 				$(options.dateTypeNode).on('click', selectNode);
+				$(options.dateOptionsNode).on('click', selectNode);
+				//phoneHome();
 			}
 
 
@@ -88,9 +90,8 @@
 			function selectNode(event) {
 				var offset;
 				var node = ($(event.currentTarget).parent().parent().hasClass('date-type'))? options.dateTypeNode:options.dateOptionsNode;
-				var value = $(event.currentTarget).text().toLowerCase().replace(/ /g, '');
-
-				//console.log( $(event.currentTarget).parent().parent().hasClass('date-options'));
+				var value = String($(event.currentTarget).attr('data-format-type'));//$(event.currentTarget).text().toLowerCase().replace(/ /g, '');
+				//console.log(value);
 				//	each .node in .date-type
 				//	de-select each .node
 				$(node).each(function() {
@@ -101,30 +102,43 @@
 
 				//	show .date-options panel
 				$(options.dateOptions).attr('display', 'display');
-				
+
+				//	reset display nodes
+				$('.date-options li#2.node').removeAttr('display');
 
 				//	if current target is .date-type
 				if($(event.currentTarget).parent().parent().hasClass('date-type')){
+
+					$(options.dateOptionsNode).each(function() {
+						$(this).attr('selected', false);
+					});
 					
 					offset = Number($(event.currentTarget).attr('id'))-1;
 					$(options.dateOptions).css({
 						marginTop: 10+(35*offset)
 					});
 
-					return selected.format = value;
-				}
+					selected.format = value;
+
+					$('.date-options li#2.node').attr('display', (selected.format === 'year')?'none':'display' );
+
+					return;
+				} 
+
 
 				//	if current target is .date-options
 				//	adjust position
 				if($(event.currentTarget).parent().parent().hasClass('date-options')) {	
 					selected.formatType = value;
+
+					$('.date-options li#2.node').attr('display', (selected.format === 'year')?'none':'display' );
 				}
 				//	--
 
 				// set new data-datepicker-format attr
 				//console.log(formatDate(selected.format, selected.formatType));
 				$(options.element).attr('data-datepicker-format', formatDate(selected.format, selected.formatType));
-				options.callback();
+				phoneHome();
 				
 			}
 			//	--
@@ -133,7 +147,7 @@
 			//	format date-type
 			function formatDate(selected, format) {
 				//console.log(selected, format);
-				var f;
+				var f,d;
 
 				switch(selected) {
 					case 'day':
@@ -146,7 +160,7 @@
 						}
 
 						if(format === 'none') {
-							f = ' ';
+							f = '';
 						}
 
 						dateFormat.day = f;
@@ -162,7 +176,7 @@
 						}
 
 						if(format === 'none') {
-							f = ' ';
+							f = '';
 						}
 
 						dateFormat.month = f;
@@ -170,17 +184,20 @@
 
 					case 'year':
 						if(format === 'number') {
-							f = YYYY;
+							f = 'YYYY';
 						}
 
 						if(format === 'none'){
-							f = ' ';
+							f = '';
 						}
 
 						dateFormat.year = f;
 					break;
 
 				}
+
+				d = dateFormat.day+ ' '+dateFormat.month+' '+dateFormat.year;
+				$('.datepicker-format').text(d);
 
 				return dateFormat.day+ ' '+dateFormat.month+' '+dateFormat.year;
 
@@ -191,16 +208,15 @@
 			//	callback function
 			function phoneHome() {
 				//console.log('calling back');
-				if(options.callback !== null) {
-					options.callback();
+				if(options.onFormatChanged !== null) {
+					return options.onFormatChanged(dateFormat);
 				}
-
 
 			}
 
 			return this;
 		}
-		//	--
+		//-- end # brandifyer.datepickerOptions
 
 
 		
