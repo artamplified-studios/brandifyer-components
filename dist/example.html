@@ -4,18 +4,108 @@
 <title>Brandifyer Components examples and uses</title>
 
 <!-- css dependencies -->
-<link rel="stylesheet" type="text/css" href="css/brandifyer-components.css">
+<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/css/pikaday.css">
+<link rel="stylesheet" type="text/css" href="/css/brandifyer-components.css">
 
 <!-- javascript dependencies -->
 <script src="js/jquery.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/pikaday.js"></script>
 <script src="js/jquery.brandifyer-components.js"></script>
 </head>
 
 
 <body>
-Hello World!
+Datepicker format options
+
+<p>
+    <input id="datepicker" type="text">
+    <button class="datepicker-options-btn"><i class="fa fa-caret-right"></i></button>
+</p>
+
+<!-- example 1 -->
+<!-- <div class="brandifyer">
+	<div class="datepicker-options" data-datepicker-format=""></div>
+	<div class="datepicker-format"></div>
+</div> -->
 
 
+<!-- example 2 -->
+<div class="brandifyer">
+	<div class="datepicker-options" data-datepicker-format="">
+
+		<div class="template">
+
+			<div class="date-type">
+				<ul>
+					<li class="node-header" data-translation="en">Type to format</li>
+					<li id="1" class="node" data-translation="en" data-format-type="day">Day <i class="fa fa-caret-right pull-right"></i></li>
+					<li id="2" class="node" data-translation="en" data-format-type="month">Month <i class="fa fa-caret-right pull-right"></i></li>
+					<li id="3" class="node" data-translation="en" data-format-type="year">Year <i class="fa fa-caret-right pull-right"></i></li>
+				</ul>
+			</div>
+
+			<div display="none" class="date-options">
+				<ul>
+					<li class="node-header" data-translation="en">Format as</li>
+					<li id="1" class="node" data-translation="en" data-format-type="number">Number</li>
+					<li id="2" class="node" data-translation="en" data-format-type="name">Name</li>
+					<li id="3" class="node" data-translation="en" data-format-type="none">None</li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="datepicker-format"></div>
+</div>
+
+
+
+
+<script>
+
+$( document ).ready(function() {
+
+    //	pikaday
+    var picker = new Pikaday({ 
+    	field: $('#datepicker')[0],
+    	format: 'DD-MM-YYYY'
+    });
+    //	--
+
+    //  init datepicker options
+    $('.datepicker-options').brandifyer().datepickerOptions({
+    	//template: 'templates/datepicker-options.html',	// needed for example 1
+    	onFormatChanged: dateFormatChange                   // call back function
+    });
+
+
+    //	callback function triggered from jquery.brandifyer-components.js
+    //	returns format:Object
+    //	@format.day
+    //	@format.month
+    //	@format.year
+    function dateFormatChange(newFormat) {
+    	var f = newFormat.day+'-'+newFormat.month+'-'+newFormat.year;
+    	var m = moment($('#datepicker').attr('value'), f).format();
+
+    	$('#datepicker').attr('value', m)
+
+    	//	re-set pikaday
+    	picker.destroy();
+    	picker = new Pikaday({
+    		field: $('#datepicker')[0],
+    		format: f
+    	});
+    	//	--
+    	
+    }
+});
+
+</script>
 </body>
 
 </html>
