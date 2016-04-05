@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+div.brandifyer 
+	.pull-right {
+		float: right;
+}
+
+
+div.brandifyer
+	.datepicker-options {
+		font-family: 'Helvetica', Sans-Serif;
+		font-size: 12px;
+		position: absolute;
+		/*border:solid;*/
+}
+
+div.brandifyer
+	.datepicker-options[display="none"], [display="none"] {
+		display: none;
+}
+
+div.brandifyer
+	.datepicker-options 
+		.date-type, .date-options {
+		float:left;
+		width: 150px;
+		height: 150px;
+		box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+		border-radius: 2px;
+		background-color: white;
+}
+
+div.brandifyer
+	.datepicker-options 
+		.date-options {
+			margin-left: -5px;
+}
+
+div.brandifyer
+	.datepicker-options ul {
+		padding: 0px;
+}
+
+div.brandifyer
+	.datepicker-options ul 
+		.node-header {
+			font-weight:  bold;
+}
+
+div.brandifyer
+	.datepicker-options ul li{
+		list-style-type:none;
+		padding-left: 15%;
+		padding-right: 5%;
+		height: 35px;
+		line-height: 35px !important;
+		/*border:solid;*/
+}
+div.brandifyer
+	.datepicker-options ul li i{
+		line-height: 35px;
+}
+
+
+div.brandifyer
+	.datepicker-options ul li.node:hover {
+		background-color: #69B5D6 !important;
+		color:white;
+		cursor: pointer;
+}
+
+div.brandifyer
+	.datepicker-options ul li.node[selected="selected"] {
+		background-color: #D9D9D9;
+}
