@@ -48,6 +48,7 @@
 			$(options.element).attr('data-datepicker-format', dateFormat.day+' '+dateFormat.month+' '+dateFormat.year);
 
 			$('.datepicker-options').css({
+				top: options.position.top+20,
 				left: options.position.left
 			});
 			
