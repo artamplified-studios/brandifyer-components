@@ -67,42 +67,47 @@ Datepicker format options
 
 <script>
 
-$( document ).ready(function() {
+$(document).ready(function() {
 
-    //	pikaday
-    var picker = new Pikaday({ 
-    	field: $('#datepicker')[0],
-    	format: 'DD-MM-YYYY'
-    });
-    //	--
+    (function($) {
+        //  pikaday
+        var picker = new Pikaday({ 
+            field: $('#datepicker')[0],
+            format: 'DD-MM-YYYY'
+        });
+        //  --
 
-    //  init datepicker options
-    $('.datepicker-options').brandifyer().datepickerOptions({
-    	//template: 'templates/datepicker-options.html',	// needed for example 1
-    	onFormatChanged: dateFormatChange                   // call back function
-    });
+        //  init datepicker options
+        $('.datepicker-options').brandifyer().datepickerOptions({
+            onFormatChanged: dateFormatChange                   // call back function
+        });
 
 
-    //	callback function triggered from jquery.brandifyer-components.js
-    //	returns format:Object
-    //	@format.day
-    //	@format.month
-    //	@format.year
-    function dateFormatChange(newFormat) {
-    	var f = newFormat.day+'-'+newFormat.month+'-'+newFormat.year;
-    	var m = moment($('#datepicker').attr('value'), f).format();
+        //  callback function triggered from jquery.brandifyer-components.js
+        //  returns format:Object
+        //  @format.day
+        //  @format.month
+        //  @format.year
+        function dateFormatChange(newFormat) {
+            var f = newFormat.day+'-'+newFormat.month+'-'+newFormat.year;
+            var m = moment($('#datepicker').attr('value'), f).format();
 
-    	$('#datepicker').attr('value', m)
+            $('#datepicker').attr('value', m)
 
-    	//	re-set pikaday
-    	picker.destroy();
-    	picker = new Pikaday({
-    		field: $('#datepicker')[0],
-    		format: f
-    	});
-    	//	--
-    	
-    }
+            //  re-set pikaday
+            picker.destroy();
+            picker = new Pikaday({
+                field: $('#datepicker')[0],
+                format: f
+            });
+            //  --
+            
+        }
+
+
+    })(jQuery);
+
+
 });
 
 </script>
