@@ -10,7 +10,8 @@
 *
 */
 (function($) {
-
+	'use strict';
+	/*jslint todo: true */
 	$.fn.brandifyer = function() {
 
 		//	# brandifyer.datepickerOptions
@@ -28,7 +29,8 @@
 				dateOptions: 		'.datepicker-options .date-options',
 				dateOptionsNode: 	'.datepicker-options .date-options ul li.node',
 				display: 			false,
-				dateFormat:   		{day: 	'DD', month: 	'MM', year: 	'YYYY'}
+				dateFormat:   		{day: 	'DD', month: 	'MM', year: 	'YYYY'},
+				interval: 			null,
 			},
 			//	--
 
@@ -71,7 +73,7 @@
 
 			//	Toggle show/hide .datepicker-options panel
 			toggleDisplay = function() {
-				
+				console.log('what the f')
 				if(!options.display) {
 					$(options.element).attr('display', 'display');
 					return options.display = true;
@@ -274,9 +276,186 @@
 		//-- end # brandifyer.datepickerOptions
 
 
-		
-		return this;
+
+		/*
+		When init search dom for any .brandifyer-modal-btn
+
+		*/
+		//	# brandifyer.modal
+		//	display overlay
+		this.modal = function(settings) {
+			console.log('init modal');
+			var self = this,
+
+			//	defaults
+			options = {
+				modalButton: 		$('.brandifyer-modal-btn'),
+				modalElement: 		$('#'+$('.brandifyer-modal-btn').attr('data-target-modal')),
+				size: 				{width: '100%', height: '100%'},
+				backgroundColor: 	'rgba(0,0,0,0.2',
+				display: 			false,
+				onModalOpen: 		function() {},
+				onModalClose: 		function() {}
+			},
+			//	--
+
+
+
+			//	When user interaction with .brandifyer-modal-btn
+			//	toggle modal
+			toggleModal = function(event) {
+				console.log('toggle modal', options.display);
+				//	set target modalElement
+
+
+				if(!options.display) {
+					$(document).on('click', eventOnModal);
+				} else {
+					$(document).unbind('click', eventOnModal);
+				}
+
+				toggleDisplay();
+			},
+			//	--
+
+
+
+
+			//	Toggle show/hide .datepicker-options panel	
+			toggleDisplay = function() {
+				//console.log(options.display);
+				if(!options.display) {
+					$(options.modalElement).attr('display', 'display');
+					options.interval = setInterval(addTransition, 100);
+					return options.display = true;
+				}
+
+				if(options.display) {
+					options.display = false;
+					$(options.modalElement).attr('transition', 'none');
+					return options.display = false;
+				}
+			},
+			//	--
+
+			
+
+			//	add transition after display attr has been set
+			//	*cannot have transition if display attr is present
+			addTransition = function() {
+				$(options.modalElement).attr('transition', 'normal');
+				clearInterval(options.interval);
+			},
+			//	--
+
+
+
+			//	Check if modal is visible
+			//	Set attr display after modal transitionend
+			//	Trigger callback
+			closeModal = function() {
+				console.log('options frome closemodal', options);
+				if(options.display) {
+					onModalOpen();
+					return false;
+				}
+
+				onModalClose();
+				$(options.modalElement).attr('display', 'none');
+			},
+			//	--
+
+
+
+			//	When user interaction with custom close button
+			//	force modal close
+			close = function(event) {
+				
+				console.log('options from close: ', options.display = true);
+				toggleDisplay();
+			},
+
+
+
+			//	callback function when modal is opened and transition is finsihed
+			onModalOpen = function() {
+				options.onModalOpen();
+			},
+			//	--
+
+
+
+			//	callback function when modal is closed and transition is finished
+			onModalClose = function() {
+				options.onModalClose();
+			},
+			//	--
+
+			
+
+			//	Event on modal
+			//	When modal is open check if click on modal
+			//	Close modal if click on modal
+			eventOnModal = function(event) {
+				var state =  $(event.target).is('div.brandifyer-modal');
+
+				if(! $(event.target).is('div.brandifyer-modal') ) {
+					return;
+				}
+
+				//	modal is visible
+				//	close when toggle
+				options.display = true;
+				toggleDisplay();
+
+				//	unbind event from document
+				$(document).unbind('click', eventOnModal);
+			
+			},
+			//	--
+
+
+			//	tester
+			mrfoo = function() {
+				return 'hello, this is mrfoo from brandifyer.modal';
+			},
+
+
+			//	exec didLoadDocument on init
+			didLoadDocument = function() {
+				console.log('didLoadDocument')
+				//	hide modal on init
+				$(options.modalElement).attr('display', 'none');
+
+				//	bind event transitionend
+				$(options.modalElement).on('transitionend', closeModal);
+
+				//	add event click toggleModal
+				$(options.modalButton).on('click', toggleModal);
+
+			};
+
+
+			//	public api
+			return {
+				options: options,
+				close: close,
+				mrfoo: mrfoo,
+				init: didLoadDocument
+			}
+			//	--
+
+		}
+		//-- end # brandifyer.modal
+
+		return this.each(function () {
+            new $.modal($(this), options);
+        });
 	}
 
+	$(document).ready(function() {
+		console.log('ready');
+		$.fn.brandifyer().modal().init();
+	});
 
 })(jQuery);
