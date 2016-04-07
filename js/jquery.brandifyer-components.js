@@ -34,15 +34,6 @@
 
 
 
-			//	store selected node
-			selected = {
-				format: 	'',
-				formatType: ''
-			},
-			//	--
-
-
-
 			//	When user interaction with .datepicker-options-btn
 			//	Add click event to document
 			//	Hide .datepicker-options if not focused on .datepicker-options-btn
