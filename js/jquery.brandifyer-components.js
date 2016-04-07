@@ -277,14 +277,15 @@
 
 
 
-		/*
-		When init search dom for any .brandifyer-modal-btn
 
-		*/
 		//	# brandifyer.modal
 		//	display overlay
+		//	--
+		//	todo
+		//	rewrite to be able to have multple instances
+		//	study jquery plugins dealing with multiple instances
 		this.modal = function(settings) {
-			console.log('init modal');
+			//console.log('init modal');
 			var self = this,
 
 			//	defaults
@@ -304,9 +305,12 @@
 			//	When user interaction with .brandifyer-modal-btn
 			//	toggle modal
 			toggleModal = function(event) {
-				console.log('toggle modal', options.display);
+				//console.log('toggle modal', (self.selector === ' '));
 				//	set target modalElement
+				options.modalElement = (self.selector === '')?$('#'+$(event.target).attr('data-target-modal')):$('#'+self.selector);
 
+				//	bind event transitionend
+				$(options.modalElement).on('transitionend', closeModal);
 
 				if(!options.display) {
 					$(document).on('click', eventOnModal);
@@ -331,7 +335,6 @@
 				}
 
 				if(options.display) {
-					options.display = false;
 					$(options.modalElement).attr('transition', 'none');
 					return options.display = false;
 				}
@@ -354,7 +357,7 @@
 			//	Set attr display after modal transitionend
 			//	Trigger callback
 			closeModal = function() {
-				console.log('options frome closemodal', options);
+				//console.log('options frome closemodal', options);
 				if(options.display) {
 					onModalOpen();
 					return false;
@@ -369,11 +372,15 @@
 
 			//	When user interaction with custom close button
 			//	force modal close
-			close = function(event) {
-				
-				console.log('options from close: ', options.display = true);
-				toggleDisplay();
+			close = function() {	
+				//console.log( $(options.modalButton.selector+"[data-target-modal='"+this.data.selector+"']") )
+				//	re-set modalElement
+				//	re-set modalButton
+				options.modalElement = $(this.data.selector);
+				options.modalButton = $(options.modalButton.selector+"[data-target-modal='"+this.data.selector+"']");		
+				$(options.modalButton).trigger('click');
 			},
+			//	--
 
 
 
@@ -423,12 +430,10 @@
 
 			//	exec didLoadDocument on init
 			didLoadDocument = function() {
-				console.log('didLoadDocument')
+				//console.log('didLoadDocument')
 				//	hide modal on init
 				$(options.modalElement).attr('display', 'none');
 
-				//	bind event transitionend
-				$(options.modalElement).on('transitionend', closeModal);
 
 				//	add event click toggleModal
 				$(options.modalButton).on('click', toggleModal);
@@ -441,7 +446,8 @@
 				options: options,
 				close: close,
 				mrfoo: mrfoo,
-				init: didLoadDocument
+				init: didLoadDocument,
+				data: this
 			}
 			//	--
 
@@ -454,7 +460,7 @@
 	}
 
 	$(document).ready(function() {
-		console.log('ready');
+		//console.log('ready');
 		$.fn.brandifyer().modal().init();
 	});
 
