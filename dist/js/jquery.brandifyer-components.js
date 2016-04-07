@@ -28,25 +28,9 @@
 				dateOptions: 		'.datepicker-options .date-options',
 				dateOptionsNode: 	'.datepicker-options .date-options ul li.node',
 				display: 			false,
-
-				dateFormat: {
-					day: 	'DD',
-					month: 	'MM',
-					year: 	'YYYY'
-				}
-
+				dateFormat:   		{day: 	'DD', month: 	'MM', year: 	'YYYY'}
 			},
 			//	--
-
-
-
-			//	default dateFormat settings
-			dateFormat = {
-				day: 		'DD',
-				month: 		'MM',
-				year: 		'YYYY'
-			},
-			//--
 
 
 
@@ -194,7 +178,7 @@
 							f = '';
 						}
 
-						dateFormat.day = f;
+						options.dateFormat.day = f;
 					break;
 
 					case 'month':
@@ -210,7 +194,7 @@
 							f = '';
 						}
 
-						dateFormat.month = f;
+						options.dateFormat.month = f;
 					break;
 
 					case 'year':
@@ -222,15 +206,15 @@
 							f = '';
 						}
 
-						dateFormat.year = f;
+						options.dateFormat.year = f;
 					break;
 
 				}
 
-				d = dateFormat.day+ ' '+dateFormat.month+' '+dateFormat.year;
-				$('.datepicker-format').text(d);
+				d = options.dateFormat.day+ ' '+options.dateFormat.month+' '+options.dateFormat.year;
+				$('.datepicker-format-output').text(d);
 
-				return dateFormat.day+ ' '+dateFormat.month+' '+dateFormat.year;
+				return d;
 
 			},
 			//	--
