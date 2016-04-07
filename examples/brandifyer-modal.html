@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Brandifyer Components examples and uses</title>
+
+<!-- css dependencies -->
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../css/pikaday.css">
+<link rel="stylesheet" type="text/css" href="../css/brandifyer-components.css">
+
+<!-- javascript dependencies -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/moment.min.js"></script>
+<script src="../js/pikaday.js"></script>
+<script src="../js/jquery.brandifyer-components.js"></script>
+</head>
+
+
+<body>
+Modal example
+
+<p>
+<button class="brandifyer-modal-btn" data-target-modal="example-modal">Open modal</button>
+<button class="brandifyer-modal-btn" data-target-modal="example-modal-2">Open modal 2</button>
+</p>
+
+<div class="brandifyer-component">
+    <div id="example-modal" class="brandifyer-modal" display="none">
+
+        <div class="example-content" style="width:100px;height:100px;background-color: white;border:solid;margin-left:auto;margin-right:auto;">
+        <button class="force-close-example">force close</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="brandifyer-component">
+    <div id="example-modal-2" class="brandifyer-modal" display="none">
+
+        <div class="example-content" style="width:100px;height:100px;background-color: white;border:solid;margin-left:auto;margin-right:auto;">
+        <button class="force-close-example-2">force close</button> another modal
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+$(document).ready(function() {
+
+    $('.force-close-example-2').on('click', function() {
+       $('example-modal-2').brandifyer().modal().close();
+    });
+
+    $('.force-close-example').on('click', function() {
+       $('example-modal').brandifyer().modal().close();
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>

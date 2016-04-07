@@ -1,11 +1,29 @@
 @charset "UTF-8";
 
+/*
+*	#general
+*/
+div.brandifyer
+	[display="none"] {
+		display:none;
+}
+
 div.brandifyer 
 	.pull-right {
 		float: right;
 }
 
+div.brandifyer-component[display="none"],
+	[dipslay="none"] {
+		display: none;
+}
 
+
+
+
+/*
+*	#datepicker-options
+*/
 div.brandifyer
 	.datepicker-options {
 		font-family: 'Helvetica', Sans-Serif;
@@ -73,3 +91,4 @@ div.brandifyer
 	.datepicker-options ul li.node[selected="selected"] {
 		background-color: #D9D9D9;
 }
+	
