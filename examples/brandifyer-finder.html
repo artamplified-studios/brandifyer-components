@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Brandifyer Components examples and uses</title>
+
+<!-- css dependencies -->
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../css/brandifyer-components.css">
+
+<!-- javascript dependencies -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.brandifyer-components.js"></script>
+</head>
+
+
+<body>
+Brandifyer-finder example
+
+<p>
+<button class="brandifyer-modal-btn" data-target-modal="example-modal">Open Finder</button>
+</p>
+
+<!-- <div class="brandifyer-component">
+    <div id="example-finder" class="brandifyer-finder" >HELLOW</div>
+</div> -->
+
+<div class="brandifyer-component">
+    <div id="example-modal" class="brandifyer-modal" display="none">
+        <div id="example-finder" class="brandifyer-finder"></div>
+    </div>
+</div>
+
+<script>
+
+$(document).ready(function() {
+
+   $('.brandifyer-finder-btn').brandifyer().finder({
+        template: '../templates/finder.html'
+   })
+
+});
+
+</script>
+
+</body>
+
+</html>

@@ -272,7 +272,7 @@
 			});
 
 
-		}
+		};
 		//-- end # brandifyer.datepickerOptions
 
 
@@ -443,25 +443,137 @@
 
 			//	public api
 			return {
-				options: options,
-				close: close,
-				mrfoo: mrfoo,
-				init: didLoadDocument,
-				data: this
+				options: 	options,
+				close: 		close,
+				mrfoo: 		mrfoo,
+				init: 		didLoadDocument,
+				data: 		this
 			}
 			//	--
 
-		}
+		};
 		//-- end # brandifyer.modal
 
+
+
+
+		//	#brandifyer.finder
+		this.finder = function(settings) {
+			// console.log(settings)
+			var self = this,
+
+
+			//	defaults
+			options = {
+				element: $('.brandifyer-finder'),
+				template: settings.template || null
+			},
+			//	--
+
+
+
+			//	Post search query
+			sendQuery = function(query) {
+				console.log('New search query: ', query);
+			},
+			//	--
+
+
+			//	set results
+			setResults = function() {
+
+			},
+			//	--
+
+
+			//	User interaction with keyup and input is focused
+			//	Fetch input.value
+			//	Clear sendQuery if user is continuously typing
+			//	Delay sendQuery 1s
+			keyup = function(event) {
+				//console.log(event.keyCode);
+				var query = $(options.element.selector+' input').val();
+
+
+				clearInterval(options.a);
+
+				if(event.keyCode === 13) {
+					return enter(query);
+				}
+	
+				if(query.length < 1) {
+					return;
+				}
+
+				
+				options.a = setInterval(function() {
+					clearInterval(options.a);
+					sendQuery(query);
+				}, 1000);
+			},
+			//	--
+
+
+
+			// user interaction with keyup.keycode === 13 and input is focused
+			// 
+			enter = function(query) {
+				clearInterval(options.a);
+				console.log('New search query on key enter: ', query);
+			},
+			//	--
+
+
+
+			//	exec didLoadDocument on init
+			didLoadDocument = function() {
+				console.log(options.template)
+				//	if template passed
+				//	load template in options.element
+				//	and add event after async is complete
+				if( Boolean(options.hasOwnProperty('template')) ) {
+					$(options.element).load(options.template, function() {
+						$('input').on('keyup', keyup);
+					});
+				//	else add event
+				} else {
+					
+
+				}
+			};
+			//	--
+
+			didLoadDocument();
+
+			//	public api
+			return {
+				options: options,
+				init: didLoadDocument,
+				data: this
+			}
+
+
+
+
+
+
+		};
+
+
 		return this.each(function () {
-            new $.modal($(this), options);
+            //new $.finder($(this), options);
+            //new $.finder($(this), options);
         });
+
 	}
 
 	$(document).ready(function() {
 		//console.log('ready');
 		$.fn.brandifyer().modal().init();
+
+		// if($('.brandifyer-finder-btn').length) {
+		// 	$.fn.brandifyer().finder().init();
+		// }
 	});
 
 })(jQuery);

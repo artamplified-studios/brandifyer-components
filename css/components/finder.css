@@ -1,0 +1,103 @@
+/*
+*	#brandifyer-finder
+*/
+div.brandifyer-component {
+}
+div.brandifyer-component
+	.brandifyer-finder {
+		margin-left: auto;
+		margin-right:auto;
+		margin-top: 15%;
+		font-family: Helvetica, Sans-serif;
+		font-size: 100%;
+
+}
+
+div.brandifyer-component
+	.brandifyer-finder,
+div.brandifyer-component
+	.brandifyer-template {
+		width: 50%;
+		max-width: 800px;
+		min-width: 600px;
+}
+
+div.brandifyer-component
+	.brandifyer-finder,
+div.brandifyer-component
+	.brandifyer-template,
+div.brandifyer-component
+	.searchbar {
+		height: 70px;
+}
+
+div.brandifyer-component
+	.brandifyer-finder
+		.searchbar {
+			width: 100%;
+			height: 70px;
+			/*border:solid;*/
+			border-radius: 5px;
+			background-color: #FFFFFF;
+			border:solid;
+			border-color: #8F8F8F;
+			border-width: 1px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+
+div.brandifyer-component
+	.brandifyer-finder
+		.icon,
+div.brandifyer-component
+	.brandifyer-finder
+		.search {
+			display: inline-block;
+			vertical-align: top;
+			color: #8A8A8A;
+}
+
+div.brandifyer-component
+	.brandifyer-finder
+		.icon {
+			width: 50px;
+			height: 50px;
+			line-height: 70px;
+			font-size: 2em;
+			text-align: center;
+}
+
+div.brandifyer-component
+	.brandifyer-finder
+		.fa {
+			font-weight: 100;
+}
+
+div.brandifyer-component
+	.brandifyer-finder
+		.search {
+			width: 85%;
+			height: 100%;
+}
+
+div.brandifyer-component
+	.brandifyer-finder
+		input:focus {
+			outline: none;
+}
+
+div.brandifyer-component
+	.brandifyer-finder
+		input {
+			width: 100%;
+			height: 100%;
+			border: none;
+			background-color: transparent;
+			font-size: 2em;
+			font-weight: 300;
+}
+
+
+
+
+
+
