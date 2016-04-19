@@ -10,7 +10,7 @@
 
 <!-- javascript dependencies -->
 <script src="js/jquery.min.js"></script>
-<script src="js/moment.min.js"></script>
+<script src="js/moment-with-locales.min.js"></script>
 <script src="js/pikaday.js"></script>
 <script src="js/jquery.brandifyer-components.js"></script>
 </head>
@@ -73,9 +73,10 @@ $(document).ready(function() {
         //  pikaday
         var picker = new Pikaday({ 
             field: $('#datepicker')[0],
-            format: 'DD-MM-YYYY'
+            format: 'DD-MMMM-YYYY'
         });
         //  --
+
 
         //  init datepicker options
         $('.datepicker-options').brandifyer().datepickerOptions({
@@ -89,18 +90,13 @@ $(document).ready(function() {
         //  @format.month
         //  @format.year
         function dateFormatChange(newFormat) {
-            var f = newFormat.day+'-'+newFormat.month+'-'+newFormat.year;
-            var m = moment($('#datepicker').attr('value'), f).format();
-
-            $('#datepicker').attr('value', m)
-
-            //  re-set pikaday
-            picker.destroy();
-            picker = new Pikaday({
-                field: $('#datepicker')[0],
-                format: f
-            });
-            //  --
+            console.log('format changed');
+            var f = newFormat.day+' '+newFormat.month+' '+newFormat.year;
+            var m = new moment(picker.getMoment().format(f), f, 'fr' );
+     
+            console.log(m.format(f));
+            $('.datepicker-format').text(m.format(f));
+            $('#datepicker').text('hahaha')
             
         }
 

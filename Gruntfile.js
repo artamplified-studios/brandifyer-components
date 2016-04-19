@@ -7,6 +7,7 @@ module.exports = function(grunt) {
 				files:[
 					{src: 'bower_components/jquery/dist/jquery.min.js', dest: 'dist/js/jquery.min.js'},
 					{src: 'node_modules/moment/min/moment.min.js', dest: 'dist/js/moment.min.js'},
+					{src: 'node_modules/moment/min/moment-with-locales.min.js', dest: 'dist/js/moment-with-locales.min.js'},
 					{src: 'bower_components/font-awesome/css/font-awesome.min.css', dest: 'dist/js/font-awesome.min.css'},
 					// {src: '**', expand:true, cwd: 'css', dest: 'dist/css'},
 					{src: '**', expand:true, cwd: 'js', dest: 'dist/js'},
