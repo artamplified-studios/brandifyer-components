@@ -33,6 +33,9 @@
 				interval: 			null,
 			},
 			//	--
+			selected = {
+				format:''
+			},
 
 
 
@@ -73,7 +76,7 @@
 
 			//	Toggle show/hide .datepicker-options panel
 			toggleDisplay = function() {
-				console.log('what the f')
+				console.log('Toggle datepicker format options')
 				if(!options.display) {
 					$(options.element).attr('display', 'display');
 					return options.display = true;
@@ -278,7 +281,7 @@
 
 
 
-		//	# brandifyer.modal
+		//	#brandifyer.modal #modal
 		//	display overlay
 		//	--
 		//	todo
@@ -455,13 +458,13 @@
 		//-- end # brandifyer.modal
 
 		return this.each(function () {
-            new $.modal($(this), options);
+            //new $.modal($(this));
         });
 	}
 
 	$(document).ready(function() {
 		//console.log('ready');
-		$.fn.brandifyer().modal().init();
+		//$.fn.brandifyer().modal().init();
 	});
 
 })(jQuery);
