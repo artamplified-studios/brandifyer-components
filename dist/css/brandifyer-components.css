@@ -18,6 +18,10 @@ div.brandifyer-component[display="none"],
 		display: none;
 }
 
+.top-level {
+	position: absolute;
+	z-index: 99;
+}
 
 
 
@@ -29,7 +33,7 @@ div.brandifyer
 		font-family: 'Helvetica', Sans-Serif;
 		font-size: 12px;
 		position: absolute;
-		/*border:solid;*/
+		width:400px;
 }
 
 div.brandifyer
